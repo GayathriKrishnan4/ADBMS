@@ -1,0 +1,92 @@
+<pre>mysql&gt; create database college;
+ERROR 1007 (HY000): Can&apos;t create database &apos;college&apos;; database exists
+mysql&gt; use college;
+Database changed
+mysql&gt; create table student(rollno int , name varchar(50),dob date ,place varchar(100),phn_no varchar(50));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql&gt; create table course(cid int ,cname varchar(50),credit int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql&gt; show tables;
++-------------------+
+| Tables_in_college |
++-------------------+
+| course            |
+| student           |
++-------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; desc student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| rollno | int          | YES  |     | NULL    |       |
+| name   | varchar(50)  | YES  |     | NULL    |       |
+| dob    | date         | YES  |     | NULL    |       |
+| place  | varchar(100) | YES  |     | NULL    |       |
+| phn_no | varchar(50)  | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql&gt; alter table student drop phn_no;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| rollno | int          | YES  |     | NULL    |       |
+| name   | varchar(50)  | YES  |     | NULL    |       |
+| dob    | date         | YES  |     | NULL    |       |
+| place  | varchar(100) | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql&gt; alter table student add aadhar_no varchar(50);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc student;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| rollno    | int          | YES  |     | NULL    |       |
+| name      | varchar(50)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
+| place     | varchar(100) | YES  |     | NULL    |       |
+| aadhar_no | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql&gt; alter table student modify column rollno varchar;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;&apos; at line 1
+mysql&gt; alter table student modify column rollno varchar(100);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc student;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| rollno    | varchar(100) | YES  |     | NULL    |       |
+| name      | varchar(50)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
+| place     | varchar(100) | YES  |     | NULL    |       |
+| aadhar_no | varchar(50)  | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql&gt; drop table student;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql&gt; desc student;
+ERROR 1146 (42S02): Table &apos;college.student&apos; doesn&apos;t exist
+mysql&gt; drop database college;
+Query OK, 1 row affected (0.05 sec)
+
+mysql&gt; ^C
+mysql&gt; 
+
+</pre>
