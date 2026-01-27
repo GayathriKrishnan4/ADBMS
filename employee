@@ -1,0 +1,202 @@
+<pre>mysql&gt; create database work;
+Query OK, 1 row affected (0.03 sec)
+
+mysql&gt; create table employee(empno int,empname varchar(50),place varchar(50),phnno varchar(15),dept_name varchar(50),jobid int,salary int);
+ERROR 1046 (3D000): No database selected
+mysql&gt; use work;
+Database changed
+mysql&gt; create table employee(empno int,empname varchar(50),place varchar(50),phnno varchar(15),dept_name varchar(50),jobid int,salary int);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql&gt; create table department( dept_no int, empno int,empname varchar(50));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql&gt; show tables
+    -&gt; 
+    -&gt; 
+[3]+  Stopped                 sudo mysql
+<font color="#26A269"><b>mca@mca-HP-Pro-Tower-280-G9-E-PCI-Desktop-PC</b></font>:<font color="#12488B"><b>~/Desktop</b></font>$ sudo mysql
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.44-0ubuntu0.22.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type &apos;help;&apos; or &apos;\h&apos; for help. Type &apos;\c&apos; to clear the current input statement.
+
+mysql&gt; use work;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql&gt; show table employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;employee&apos; at line 1
+mysql&gt; show tables;
++----------------+
+| Tables_in_work |
++----------------+
+| department     |
+| employee       |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; alter table employee add hired_date date;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empno      | int         | YES  |     | NULL    |       |
+| empname    | varchar(50) | YES  |     | NULL    |       |
+| place      | varchar(50) | YES  |     | NULL    |       |
+| phnno      | varchar(15) | YES  |     | NULL    |       |
+| dept_name  | varchar(50) | YES  |     | NULL    |       |
+| jobid      | int         | YES  |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| hired_date | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql&gt; alter table employee modify column jobid varchar(10);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empno      | int         | YES  |     | NULL    |       |
+| empname    | varchar(50) | YES  |     | NULL    |       |
+| place      | varchar(50) | YES  |     | NULL    |       |
+| phnno      | varchar(15) | YES  |     | NULL    |       |
+| dept_name  | varchar(50) | YES  |     | NULL    |       |
+| jobid      | varchar(10) | YES  |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| hired_date | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.01 sec)
+
+mysql&gt; alter table employee modify column eno int;
+ERROR 1054 (42S22): Unknown column &apos;eno&apos; in &apos;employee&apos;
+mysql&gt; alter table employee rename column emppno to eno;
+ERROR 1054 (42S22): Unknown column &apos;emppno&apos; in &apos;employee&apos;
+mysql&gt; alter table employee rename column empno to eno;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc employee;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| eno        | int         | YES  |     | NULL    |       |
+| empname    | varchar(50) | YES  |     | NULL    |       |
+| place      | varchar(50) | YES  |     | NULL    |       |
+| phnno      | varchar(15) | YES  |     | NULL    |       |
+| dept_name  | varchar(50) | YES  |     | NULL    |       |
+| jobid      | varchar(10) | YES  |     | NULL    |       |
+| salary     | int         | YES  |     | NULL    |       |
+| hired_date | date        | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql&gt; alter table employee add job_field varchar(50);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; alter table employee modify job_field varchar(100);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc employee;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| eno        | int          | YES  |     | NULL    |       |
+| empname    | varchar(50)  | YES  |     | NULL    |       |
+| place      | varchar(50)  | YES  |     | NULL    |       |
+| phnno      | varchar(15)  | YES  |     | NULL    |       |
+| dept_name  | varchar(50)  | YES  |     | NULL    |       |
+| jobid      | varchar(10)  | YES  |     | NULL    |       |
+| salary     | int          | YES  |     | NULL    |       |
+| hired_date | date         | YES  |     | NULL    |       |
+| job_field  | varchar(100) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+9 rows in set (0.00 sec)
+
+mysql&gt; alter table employee add primary key(eno);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; alter table employee drop hired_date;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; desc employee;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| eno       | int          | NO   | PRI | NULL    |       |
+| empname   | varchar(50)  | YES  |     | NULL    |       |
+| place     | varchar(50)  | YES  |     | NULL    |       |
+| phnno     | varchar(15)  | YES  |     | NULL    |       |
+| dept_name | varchar(50)  | YES  |     | NULL    |       |
+| jobid     | varchar(10)  | YES  |     | NULL    |       |
+| salary    | int          | YES  |     | NULL    |       |
+| job_field | varchar(100) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql&gt; rename table employee to emp;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql&gt; show tables;
++----------------+
+| Tables_in_work |
++----------------+
+| department     |
+| emp            |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; truncate table emp;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql&gt; show tables;
++----------------+
+| Tables_in_work |
++----------------+
+| department     |
+| emp            |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; desc emp;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| eno       | int          | NO   | PRI | NULL    |       |
+| empname   | varchar(50)  | YES  |     | NULL    |       |
+| place     | varchar(50)  | YES  |     | NULL    |       |
+| phnno     | varchar(15)  | YES  |     | NULL    |       |
+| dept_name | varchar(50)  | YES  |     | NULL    |       |
+| jobid     | varchar(10)  | YES  |     | NULL    |       |
+| salary    | int          | YES  |     | NULL    |       |
+| job_field | varchar(100) | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql&gt; select * from emp;
+Empty set (0.01 sec)
+
+mysql&gt; drop table emp;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql&gt; 
+
+</pre>
