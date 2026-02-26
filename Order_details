@@ -1,0 +1,383 @@
+<pre>mysql&gt; create database exp2;
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; use exp2;
+Database changed
+mysql&gt; create table order_details (order_id int ,product_name varchar(50),oredr_no int,order_date date);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql&gt; desc order_details;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| order_id     | int         | YES  |     | NULL    |       |
+| product_name | varchar(50) | YES  |     | NULL    |       |
+| oredr_no     | int         | YES  |     | NULL    |       |
+| order_date   | date        | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql&gt; insert into order_details values(1,&apos;Laptop&apos;,234,&apos;2000-03-02&apos;);
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; insert into order_details values(2,&apos;Desktop&apos;,456,&apos;2001-02-02&apos;);
+Query OK, 1 row affected (0.02 sec)
+
+mysql&gt; insert into order_details values(3,&apos;Keyboard&apos;,457,&apos;2000-03-02&apos;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into order_details values(4,&apos;Mouse&apos;,500,&apos;2001-02-02&apos;);
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; insert into order_details values(5,&apos;Antivirus&apos;,501,&apos;2002-03-02&apos;);
+Query OK, 1 row affected (0.01 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
+|        4 | Mouse        |      500 | 2001-02-02 |
+|        5 | Antivirus    |      501 | 2002-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; insert into order_details values(6,&apos;Printer&apos;,600,&apos;2003-03-02&apos;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into order_details values(7,&apos;Scanner&apos;,601,&apos;2004-03-02&apos;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
+|        4 | Mouse        |      500 | 2001-02-02 |
+|        5 | Antivirus    |      501 | 2002-03-02 |
+|        6 | Printer      |      600 | 2003-03-02 |
+|        7 | Scanner      |      601 | 2004-03-02 |
++----------+--------------+----------+------------+
+7 rows in set (0.00 sec)
+
+mysql&gt; rollback;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
+|        4 | Mouse        |      500 | 2001-02-02 |
+|        5 | Antivirus    |      501 | 2002-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; delete from order_details where order_id in(4,5);
+Query OK, 2 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; set autocommoit=0;
+ERROR 1193 (HY000): Unknown system variable &apos;autocommoit&apos;
+mysql&gt; set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; commit;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; savepoint svp_update;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | oredr_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; update oredr_details set product name=&apos;Gaming_Keyboard&apos; where order_no=457;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;name=&apos;Gaming_Keyboard&apos; where order_no=457&apos; at line 1
+mysql&gt; update oredr_details set product name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;&apos; at line 1
+mysql&gt; update oreder_details set product name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;&apos; at line 1
+mysql&gt; update oreder_details set product_name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;;
+ERROR 1146 (42S02): Table &apos;exp2.oreder_details&apos; doesn&apos;t exist
+mysql&gt; update order_details set product_name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;;
+ERROR 1054 (42S22): Unknown column &apos;order_no&apos; in &apos;where clause&apos;
+mysql&gt; alter table order_details change oredr_no order_no int;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Keyboard     |      457 | 2000-03-02 |
++----------+--------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; update order_details set product_name=&apos;Gaming_Keyboard&apos; where order_no=&apos;457&apos;;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql&gt; select*from order_details;
++----------+-----------------+----------+------------+
+| order_id | product_name    | order_no | order_date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming_Keyboard |      457 | 2000-03-02 |
++----------+-----------------+----------+------------+
+3 rows in set (0.00 sec)
+
+mysql&gt; insert into order_details values(8,&apos;Tablet&apos;,602,&apos;2005-03-02&apos;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; insert into order_details values(9,&apos;Smartphone&apos;,603,&apos;2006-03-02&apos;);
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+-----------------+----------+------------+
+| order_id | product_name    | order_no | order_date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming_Keyboard |      457 | 2000-03-02 |
+|        8 | Tablet          |      602 | 2005-03-02 |
+|        9 | Smartphone      |      603 | 2006-03-02 |
++----------+-----------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; savepoint delt;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+-----------------+----------+------------+
+| order_id | product_name    | order_no | order_date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming_Keyboard |      457 | 2000-03-02 |
+|        8 | Tablet          |      602 | 2005-03-02 |
+|        9 | Smartphone      |      603 | 2006-03-02 |
++----------+-----------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; delete from order_details where product_name=&apos;Desktop&apos;;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+-----------------+----------+------------+
+| order_id | product_name    | order_no | order_date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        3 | Gaming_Keyboard |      457 | 2000-03-02 |
+|        8 | Tablet          |      602 | 2005-03-02 |
+|        9 | Smartphone      |      603 | 2006-03-02 |
++----------+-----------------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql&gt; rollback to delt;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+-----------------+----------+------------+
+| order_id | product_name    | order_no | order_date |
++----------+-----------------+----------+------------+
+|        1 | Laptop          |      234 | 2000-03-02 |
+|        2 | Desktop         |      456 | 2001-02-02 |
+|        3 | Gaming_Keyboard |      457 | 2000-03-02 |
+|        8 | Tablet          |      602 | 2005-03-02 |
+|        9 | Smartphone      |      603 | 2006-03-02 |
++----------+-----------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; rollback to svp_update;
+ERROR 1305 (42000): SAVEPOINT svp_update does not exist
+mysql&gt; set autocommit=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; start transaction;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql&gt; savepoint svp_update;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; update order_details set product_name=&apos;Console&apos; where order_no=457;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Console      |      457 | 2000-03-02 |
+|        8 | Tablet       |      602 | 2005-03-02 |
+|        9 | Smartphone   |      603 | 2006-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; savepoint svp_delete;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; delete from order_details where product_name=&apos;Desktop&apos;;
+Query OK, 1 row affected (0.00 sec)
+
+mysql&gt; rollback to svp_delete;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Console      |      457 | 2000-03-02 |
+|        8 | Tablet       |      602 | 2005-03-02 |
+|        9 | Smartphone   |      603 | 2006-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; savepoint svp_update;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Console      |      457 | 2000-03-02 |
+|        8 | Tablet       |      602 | 2005-03-02 |
+|        9 | Smartphone   |      603 | 2006-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; commit;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Console      |      457 | 2000-03-02 |
+|        8 | Tablet       |      602 | 2005-03-02 |
+|        9 | Smartphone   |      603 | 2006-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; set autocommit=1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Console      |      457 | 2000-03-02 |
+|        8 | Tablet       |      602 | 2005-03-02 |
+|        9 | Smartphone   |      603 | 2006-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; create user&apos;user1&apos;@&apos;localhost&apos; identified by &apos;1234&apos;;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql&gt; grant all privilages on order_details to &apos;user1&apos;@&apos;localhost&apos;;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near &apos;privilages on order_details to &apos;user1&apos;@&apos;localhost&apos;&apos; at line 1
+mysql&gt; grant all PRIVILeGES  on order_details to &apos;user1&apos;@&apos;localhost&apos;;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql&gt; show grants for &apos;user1&apos;@&apos;localhost&apos;;
++-----------------------------------------------------------------------+
+| Grants for user1@localhost                                            |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user1`@`localhost`                             |
+| GRANT ALL PRIVILEGES ON `exp2`.`order_details` TO `user1`@`localhost` |
++-----------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; show grants for &apos;user1&apos;@&apos;localhost&apos;;
++-----------------------------------------------------------------------+
+| Grants for user1@localhost                                            |
++-----------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO `user1`@`localhost`                             |
+| GRANT ALL PRIVILEGES ON `exp2`.`order_details` TO `user1`@`localhost` |
++-----------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+mysql&gt; revoke delete,update on oredr_details from&apos;user1&apos;@&apos;localhost&apos;;
+ERROR 1147 (42000): There is no such grant defined for user &apos;user1&apos; on host &apos;localhost&apos; on table &apos;oredr_details&apos;
+mysql&gt; revoke delete,update on order_details from&apos;user1&apos;@&apos;localhost&apos;;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql&gt; select*from order_details;
++----------+--------------+----------+------------+
+| order_id | product_name | order_no | order_date |
++----------+--------------+----------+------------+
+|        1 | Laptop       |      234 | 2000-03-02 |
+|        2 | Desktop      |      456 | 2001-02-02 |
+|        3 | Console      |      457 | 2000-03-02 |
+|        8 | Tablet       |      602 | 2005-03-02 |
+|        9 | Smartphone   |      603 | 2006-03-02 |
++----------+--------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql&gt; 
+
+</pre>
